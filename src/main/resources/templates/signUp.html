@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/sign-up.css">
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    	$(function(){
+    		$('form').on('submit', function(){
+    			if($('#u_pw').val() != $('#u_pw_re').val()) {
+    				alert('비밀번호가 일치하지 않습니다. 다시 입력해 주세요.');
+    				$('#u_pw').val('');
+    				$('#u_pw_re').val('');
+    				$('#u_pw').focus();
+    				return false;
+    			} else {
+    				return true;
+    			}
+    		});
+    	});
+    </script>
+    
+    
+</head>
+<body>
+    <div id="con">
+        <div id="login">
+        <div id="login_form"><!--로그인 폼-->
+        <form action="signUpForm" name="signUpForm" method="post" onsubmit="return mySubmit()">
+            <h3 class="login" style="letter-spacing:-1px;">Sign up to Web</h3>
+    
+            <!-- <p>
+                <input type="submit" value="Sign in with Google" class="btn" style="background-color:#217Af0">
+            </p> 구글로 로그인-->
+    
+            <hr>
+            <!-- <span>ID</span> -->
+            <div>
+            <p style="text-align: left; font-size:12px; color:#666" class="checkbox">아이디 *</p>
+            <!-- 
+            <button type="button" class="btn btn-light border-none btn-checkbx`ox" id="idCheck" onclick="fn_idCheck()" style="font-size:15px; padding:5px 5px">중복 확인</button>
+             -->
+            </div>
+            <input type="text" placeholder="아이디를 입력하세요" class="size" name="u_id" id="u_id" th:value="${u_dto == null ? '' : u_dto.u_id}" onchange="idcheck()">
+            <span class="valid">[[${valid_u_id}]]</span>
+            <!-- memberEmail ajax 중복체크 -->
+            <br>
+            <!-- <span class="idcheck_ok">사용 가능합니다.</span>
+            <span class="idcheck_already">이미 사용중입니다.</span> -->
+            <span class="idCheck"></span>
+    
+            <!-- <span>NICNAME</span> -->
+            <p style="text-align: left; font-size:12px; color:#666">닉네임 *</p>
+            <input type="text" placeholder="닉네임을 입력하세요" class="size" name="u_nick" id="u_nick" th:value="${u_dto == null ? '' : u_dto.u_nick}" onchange="nickcheck()">
+            <span>[[${valid_u_nick}]]</span>
+            <br>
+            <span class="nickCheck"></span>
+           <!--  <span class="nickcheck_ok">사용 가능합니다.</span>
+            <span class="nickcheck_already">이미 사용중입니다.</span> -->
+            
+            <!-- <span>PW</span> -->
+            <p style="text-align: left; font-size:12px; color:#666">비밀번호 *</p>
+            <input type="password" placeholder="비밀번호를 입력하세요" class="size" name="u_pw" id="u_pw" th:value="${u_dto == null ? '' : u_dto.u_pw}">
+            <span>[[${valid_u_pw}]]</span>
+            <br>
+   			 <span class="pwCheck"></span>
+   			 
+                <!-- <span>PW</span> -->
+                <p style="text-align: left; font-size:12px; color:#666"> </p>
+                <input type="password" placeholder="비밀번호를 다시 입력하세요" class="size" id="u_pw_re" th:value="${u_dto == null ? '' : u_dto.u_pw}">
+            <span>[[${valid_u_pw}]]</span>
+            <br>
+            <span class="pwCheck2"></span>
+    
+                <!-- <span>PW</span> -->
+            
+                    <!-- <span>PW</span> -->
+                <p style="text-align: left; font-size:12px; color:#666">E-mail *</p>
+                    <input type="text" placeholder="이메일" class="size" name="u_email" id="u_email" th:value="${u_dto == null ? '' : u_dto.u_email}" onchange="emailcheck()">
+            	<span>[[${valid_u_email}]]</span>
+            	<br>
+            	<span class="emailCheck"></span>
+            	<!-- <span class="emailcheck_ok">사용 가능합니다.</span>
+          	    <span class="emailcheck_already">이미 사용중입니다.</span> -->
+    
+        <br>
+            <p>
+                <input type="submit" value="가입하기" class="btn" id="signup-btn">
+                
+            </p>
+        </form>
+    
+        <hr>
+        <p class="find">
+            <span><a th:href="@{main}">홈으로</a></span>
+            <span><a th:href="@{login}">로그인 페이지로 이동</a></span>
+        </p>
+        </div>
+        <div>
+        </div><!--con-->
+    
+    <script>
+    
+    
+    
+  //아이디 중복체크
+    function idcheck(){
+	  
+        var u_id = $('#u_id').val(); //입력란의 값을 저장
+        console.log("u_id : ", u_id);
+        
+          $.ajax({
+             method: "POST",
+              url:'./idCheck', //Controller에서 요청 받을 주소
+              data: JSON.stringify({
+            	  u_id : u_id,
+             }),
+              contentType: "application/json",
+             dataType: 'json',
+              success:function(data){ //컨트롤러에서 넘어온 data값을 받는다 
+                 console.log("data : " + data);
+              
+              
+                  if(data == 0){ //data가 0일 경우) -> 사용 가능
+                	  $('.idCheck').html('사용 가능합니다.').css('color', 'green');
+                  
+                  /* 
+                      $('.idcheck_ok').css("display","inline-block"); 
+                      $('.idcheck_already').css("display", "none");
+                       */
+                      
+                  } else { // data가 0이 아닐 경우 -> 이미 존재
+                	  $('.idCheck').html('이미 사용 중입니다.').css('color', "red");
+                	  /* 
+                      $('.idcheck_already').css("display","inline-block");
+                      $('.idcheck_ok').css("display", "none");
+                       */
+                      
+                      $('#u_id').focusout();
+                      return false
+                      
+                  }
+                  
+              },
+              error:function(err){
+                  console.log("에러입니다");
+              }
+          });
+       };
+       
+       
+     //닉네임 중복체크
+       function nickcheck(){
+           var u_nick = $('#u_nick').val(); // 입력란의 값을 저장
+           console.log("u_nick : ", u_nick);
+             $.ajax({
+                method: "POST",
+                 url:'./nickCheck', //Controller에서 요청 받을 주소
+                 data: JSON.stringify({
+                	 u_nick : u_nick,
+                }),
+                 contentType: "application/json",
+                dataType: 'json',
+                 success:function(data){ //컨트롤러에서 넘어온 data값을 받는다 
+                    console.log("data : " + data);
+                     if(data == 0){ //data가 0일 경우) -> 사용 가능
+                    	 $('.nickCheck').html('사용 가능합니다.').css('color', 'green');
+                     /* 
+                         $('.nickcheck_ok').css("display","inline-block"); 
+                         $('.nickcheck_already').css("display", "none");
+                          */
+                         
+                     } else { // data가 0이 아닐 경우 -> 이미 존재
+                    	 $('.nickCheck').html('이미 사용 중입니다.').css('color', "red");
+                    	 /* 
+                         $('.nickcheck_already').css("display","inline-block");
+                         $('.nickcheck_ok').css("display", "none");
+                          */
+                         
+                         $('#u_nick').focusout();
+                         return false
+                         
+                     }
+                 },
+                 error:function(err){
+                     console.log("에러입니다");
+                 }
+             });
+          };
+          
+        //이메일 중복체크
+          function emailcheck(){
+              var u_email = $('#u_email').val(); //입력란의 값을 저장
+              console.log("u_email : ", u_email);
+                $.ajax({
+                   method: "POST",
+                    url:'./emailCheck', //Controller에서 요청 받을 주소
+                    data: JSON.stringify({
+                    	u_email : u_email,
+                   }),
+                    contentType: "application/json",
+                   dataType: 'json',
+                    success:function(data){ //컨트롤러에서 넘어온 data값을 받는다 
+                       console.log("data : " + data);
+                        if(data == 0){ //data가 0일 경우) -> 사용 가능
+                        	$('.emailCheck').html('사용 가능합니다.').css('color', 'green');
+                        /* 
+                            $('.emailcheck_ok').css("display","inline-block"); 
+                            $('.emailcheck_already').css("display", "none");
+                             */
+                            
+                        } else { // data가 0이 아닐 경우 -> 이미 존재
+                        	$('.emailCheck').html('이미 사용 중입니다.').css('color', "red");
+                        	/* 
+                            $('.emailcheck_already').css("display","inline-block");
+                            $('.check_ok').css("display", "none");
+                             */
+                            
+                            $('#u_email').focusout();
+                            return false
+                            
+                        }
+                    },
+                    error:function(err){
+                        console.log("에러입니다");
+                    }
+                });
+             };
+             
+             
+             
+          // 회원가입 유효성 검사
+
+             function mySubmit() {
+
+
+                 let u_id = $('#u_id').val();
+                 let u_pw = $('#u_pw').val();
+                 let u_nick = $('#u_nick').val();
+                 let u_email = $('#u_email').val();
+
+                 let check_id = RegExp(/^[a-zA-Z0-9]{4,10}$/); // 아이디 유효성 검사 (영문 및 숫자 4-10글자)
+                 let check_pw = RegExp(/^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,20}$/); // 비밀번호 유효성 검사 (영문 및 숫자 4-20글자)
+                 let check_nick = RegExp(/^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{2,10}$/); // 닉네임 유효성 검사 (영문/한글/숫자 2-10글)
+                 let check_email = RegExp(/^[A-Za-z0-9-_]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,6}$/);
+                 //let memberInsertForm = $('#memberInsertForm');
+
+
+				/* 
+                 // 닉네임 중복 체크 여부
+                 if (nickCheck == false) {
+                     return false;
+                 }
+
+                 // 아이디 중복 체크 여부
+                 if (idCheck == false) {
+                     return false;
+                 }
+                  */
+
+                 // 아이디 공백 확인
+                 if (u_id == "" || u_id == null) {
+                     $('.idCheck').html('아이디를 입력해주세요.');
+                     $('#u_id').focus();
+                     return false;
+                 }
+
+                 // 아이디 유효성 체크
+                 if (!check_id.test(u_id)) {
+                     $('.idCheck').html('영문 및 숫자만 4-10자리까지 입력해주세요.');
+                     $('#u_id').val("");
+                     $('#u_id').focus();
+                     return false;
+                 }
+
+                 // 비밀번호 공백 확인
+                 if (u_pw == "" || u_pw == null) {
+                     $('.pwCheck').html('비밀번호를 입력해주세요.');
+                     $('#u_pw').focus();
+                     return false;
+                 }
+
+                 // 비밀번호 유효성 체크
+                 if (!check_pw.test(u_pw)) {
+                     $('.pwCheck').html('영문 및 숫자, 특수문자를 포함한 비밀번호를 입력해주세요.');
+                     $('#u_pw').val("");
+                     $('#u_pw').focus();
+                     return false;
+                 }
+
+                 // 닉네임 공백 체크
+                 if (u_nick == "" || u_nick == null) {
+                     $('.nickCheck').html('닉네임을 입력해주세요.');
+                     $('#u_nick').focus();
+                     return false;
+                 }
+
+                 // 닉네임 유효성 체크
+                 if (!check_nick.test(u_nick)) {
+                     $('.nickCheck').html('닉네임은 영문과 한글, 숫자로 생성 가능합니다.');
+                     $('#u_nick').val("");
+                     $('#u_nick').focus();
+                     return false;
+                 }
+
+                 
+             	 // 이메일 공백 체크
+                 if (u_email == "" || u_email == null) {
+                     $('.emailCheck').html('닉네임을 입력해주세요.');
+                     $('#u_email').focus();
+                     return false;
+                 }
+
+                 // 이메일 유효성 체크
+                 if (!check_email.test(u_email)) {
+                     $('.emailCheck').html('닉네임은 영문과 한글, 숫자로 생성 가능합니다.');
+                     $('#u_email').val("");
+                     $('#u_email').focus();
+                     return false;
+                 }                 
+                 //memberInsertForm.submit();
+
+
+                 
+                 
+             }
+    
+             
+             
+             
+             
+             
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,20 @@
+package com.myet.basic.lifetip;
+
+import java.util.List;
+
+import com.myet.basic.dto.LifetipDTO;
+import com.myet.basic.util.Criteria;
+
+public interface LifetipService {
+
+	public List<LifetipDTO> lifetipListAll(Criteria cri);  // 전체 목록 조회
+	public boolean lifetipInsert(LifetipDTO dto);  // 글 등록
+	public LifetipDTO lifetipDetail(int lt_num);  // 글 상세조회
+	public boolean lifetipUpdate(LifetipDTO dto);  // 글 수정
+	public boolean lifetipDelete(int lt_num); // 글 삭제
+	
+	public int lifetipTotal(Criteria cri);// 전체 게시글 수
+	// 페이징 조회
+	// 나의 글 조회
+	
+}

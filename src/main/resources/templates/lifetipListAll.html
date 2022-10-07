@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="layout/default_layout">
+
+<!-- 
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Airspace A template by Themefisher</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+Place favicon.ico and apple-touch-icon.png in the root directory
+
+CSS
+<link rel="stylesheet" href="css/owl.carousel.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/ionicons.min.css">
+<link rel="stylesheet" href="css/animate.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/lifetipListAll.css">
+
+Js
+<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+	window.jQuery
+			|| document
+					.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')
+</script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/min/waypoints.min.js"></script>
+<script src="js/jquery.counterup.js"></script>
+
+Google Map
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="js/google-map-init.js"></script>
+
+
+<script src="js/main.js"></script>
+
+</head>
+ -->
+
+
+<body layout:fragment="content">
+	<!-- Header Start -->
+	<!-- 
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					header Nav Start
+					<nav class="navbar navbar-default">
+						<div class="container-fluid">
+							Brand and toggle get grouped for better mobile display
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed"
+									data-toggle="collapse"
+									data-target="#bs-example-navbar-collapse-1">
+									<span class="sr-only">Toggle navigation</span> <span
+										class="icon-bar"></span> <span class="icon-bar"></span> <span
+										class="icon-bar"></span>
+								</button>
+								<a class="navbar-brand" href="index.html"> <img
+									src="img/logo.png" alt="Logo">
+								</a>
+							</div>
+
+							검색
+							<div class="col-md-7 col-sm-5 header-search">
+
+								<div class="search-form">
+
+									<form class="navbar-form" role="search">
+
+										<div class="form-group">
+
+											<input type="text" class="form-control"
+												placeholder="What do you need...">
+
+										</div>
+
+										<button type="submit" class="btn">
+											<i class="fa fa-search"></i>
+										</button>
+
+									</form>
+
+								</div>
+
+							</div>
+
+
+							Collect the nav links, forms, and other content for toggling
+							<div class="collapse navbar-collapse gnb1"
+								id="bs-example-navbar-collapse-1">
+								<ul class="nav navbar-nav navbar-right">
+									<li><a href="index.html">Home</a></li>
+									<li><a href="work.html">로그인</a></li>
+									<li><a href="#">회원가입</a></li>
+									<li><a href="contact.html">고객센터</a></li>
+								</ul>
+							</div>
+							/.navbar-collapse
+
+							<hr>
+							<div class="collapse navbar-collapse gnb2"
+								id="bs-example-navbar-collapse-2">
+								<div class="category">
+									<ul class="nav navbar-nav navbar-center">
+										<li><a href="#">게시판1</a></li>
+										<li><a href="#">게시판2</a></li>
+										<li><a href="#">게시판3</a></li>
+										<li><a href="#">게시판4</a></li>
+										<li><a href="#">게시판5</a></li>
+									</ul>
+								</div>
+							</div>
+							/.navbar-collapse
+						</div>
+						/.container-fluid
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+	 -->
+	<!-- header close -->
+
+	<!-- Slider Start -->
+	<form action="lifetipListAll">
+		<section id="global-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="block h1Box">
+							<h1 class="h1Box">LifetipListAll</h1>
+							<!-- <p>Don’t just take our word for it. Check out some of our latest work.</p> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- 게시판 전게 목록 조회 -->
+		<section id="contact-form">
+			<div class="container">
+				<div>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th class="listall-t num">번호</th>
+								<th class="listall-t title">제목</th>
+								<th class="listall-t nick">작성자</th>
+								<th class="listall-t data">작성일자</th>
+								<th class="listall-t view">조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="lt_list, status : ${lt_list}">
+								<td>[[${lt_list.lt_num}]]</td>
+								<td><a th:href="@{lifetipDetail(lt_num = ${lt_list.lt_num})}">[[${lt_list.lt_title}]]</a></td>
+								<td>[[${lt_list.u_id}]]</td>
+								<td>[[${ #temporals.format(lt_list.lt_date, 'yy-MM-dd') }]]<br>
+								    [[${ #temporals.format(lt_list.lt_date, 'HH:mm:ss') }]]</td>
+								<td>[[${lt_list.lt_view}]]</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<a th:if="${session.user != null}" class="btn btn-default pull-right btn-wt" th:href="@{lifetipInsert}">글쓰기</a>
+
+				<div class="text-center">
+					<ul class="pagination">
+						<li>
+							<a th:href="@{lifetipListAll(page=1, amount=${pageDTO.amount})}" aria-hidden="true">&lt;&lt;</a>
+						</li>
+						<li th:if="${pageDTO.prev}">
+							<a th:href="@{lifetipListAll(page=${pageDTO.start-1}, amount=${pageDTO.amount})}" aria-hidden="true">&lt;</a>
+						</li>
+						<th:block th:each="num : ${pageDTO.pageList}">
+						<li th:class="${pageDTO.page == num ? 'on' : ''}">
+							<a class="page_num" th:href="@{lifetipListAll(page=${num}, amount=${pageDTO.amount})}" aria-hidden="true">[[${num}]]</a>
+						</li>
+						</th:block>
+						<li th:if="${pageDTO.next}">
+							<a th:href="@{lifetipListAll(page=${pageDTO.end + 1}, amount=${pageDTO.amount})}" aria-hidden="true">&gt;</a>
+						</li>
+						<li>
+							<a th:href="@{lifetipListAll(page=${pageDTO.realEnd}, amount=${pageDTO.amount})}" aria-hidden="true">&gt;&gt;</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</section>
+		<!-- Call to action Start -->
+		<!-- <section id="call-to-action">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="block">
+                  <h2>We design delightful digital experiences.</h2>
+                  <p>Read more about what we do and our philosophy of design. Judge for yourself The work and results we’ve achieved for other clients, and meet our highly experienced Team who just love to design.</p>
+                  <a class="btn btn-default btn-call-to-action" href="#" >Tell Us Your Story</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> -->
+
+	</form>
+	
+	<!-- footer Start -->
+	
+	<!-- 
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="footer-manu">
+						<ul>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Contact us</a></li>
+							<li><a href="#">How it works</a></li>
+							<li><a href="#">Support</a></li>
+							<li><a href="#">Terms</a></li>
+						</ul>
+					</div>
+					Shared by <i class="fa fa-love"></i><a
+						href="https://bootstrapthemes.co">BootstrapThemes</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+ -->
+
+
+</body>
+
+<script>
+
+</script>
+
+</html>
