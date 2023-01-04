@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="layout/default_layout">
+
+<body layout:fragment="content">
+
+
+	<!-- 게시판 상세 조회 -->
+	<!-- top 버튼 이전 다음 나중에 필요 -->
+	
+	<form action="lifetipUpdate">
+	    <input type="hidden" name="lt_num" th:value="${lt_detail.lt_num}">
+		<section id="contact-form">
+			<div class="container">
+				<div class="block">
+					<div class="lifetipDetail wrap">
+						<div class="lifetipDetail-img">
+							<figure>
+								<img class="detail-img" src="/img/logo.png"
+									alt="게시글 이미지(임시:이미지 없을 시 제목이 맨 위로)"> 이미지 들어간다
+							</figure>
+						</div>
+						<div class="lifetipDetail tc">
+							<div class="lifetipDetail-title ldt">
+								<div class="ldt-sero">
+									<p>
+										<span class="lifetipdetail-title">[[${lt_detail.lt_title}]]</span>
+									</p>
+								</div>
+							</div>
+							<div class="lifeDetail-content ldc">
+								<p>
+									<span class="lifetipdetatil-content">[[${lt_detail.lt_content}]]</span>
+									<!-- div p span 태그 사용? -->
+									<!-- <input type="text" class="detail-content" placeholder="내용을 입력하세요" value="내용 들어간다"> -->
+								</p>
+							</div>
+							<button class="btn btn-default submit" type="button" onClick="location.href='lifetipListAll'">목록</button>
+							<button class="btn btn-default submit" type="submit" th:if="${session.user != null && lt_detail.u_id  == session.user.u_id}">수정</button>
+							<button class="btn btn-default submit" type="submit" th:if="${session.user != null && lt_detail.u_id  == session.user.u_id}" th:formaction="@{/lifetipDelete(lt_num=${lt_detail.lt_num})}">삭제</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<!-- 끝에 댓글 좋아요 공유 넣아야함 -->
+
+		</section>
+		<!-- Call to action Start -->
+		<!-- <section id="call-to-action">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="block">
+                  <h2>We design delightful digital experiences.</h2>
+                  <p>Read more about what we do and our philosophy of design. Judge for yourself The work and results we’ve achieved for other clients, and meet our highly experienced Team who just love to design.</p>
+                  <a class="btn btn-default btn-call-to-action" href="#" >Tell Us Your Story</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> -->
+
+	</form>
+
+	<script th:inline="javascript">
+	
+	/* 
+		function lt_delete(){
+			event.preventDefault();
+			document.actionForm.action = "lifetipDelete";
+			document.actionForm.method = "post"; 
+			document.actionForm.submit(); //서브밋
+		}
+		 */
+		
+		 
+		 
+		 
+	
+	</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+th,
+td {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+td {
+    height: 50px;
+}
+
+.num {
+    width: 50px;
+}
+
+.title {
+    width: 50%;
+}
+
+.nick {
+    width: 120px;
+}
+
+.data {
+    width: 120px;
+}
+
+.view {
+    width: 120px;
+}
+
+.btn-wt {
+    width: 70px;
+    height: 35px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    /* 가로 - 중앙으로 */
+    justify-content: center;
+    /* 세로 - 상단으로 */
+    border-radius: 2em;
+}
+
+.pagination {
+    display: inline-block !important;
+  }
+
+.pagination a {
+    color: black !important;
+    float: left !important;
+    padding: 8px 16px !important;
+    text-decoration: none !important;
+}
+
+/* https://hianna.tistory.com/675  */
+.search_area{
+	display: flex;
+	justify-content: center;
+    align-items : center;
+}
+
+.search_area input{
+	height: 30px;
+	width: 250px;
+}
+
+.search_area button{
+	width: 50px;
+	height: 30px;
+	margin-left: 3px;
+}
