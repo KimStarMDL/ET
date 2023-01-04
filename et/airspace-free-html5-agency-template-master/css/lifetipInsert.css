@@ -1,0 +1,30 @@
+#contact-form{
+    padding-top: 35px;
+}
+
+.h1Box{
+    width: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.writeBox{
+    width:750px;
+    margin:0 auto;
+    text-align: center;
+}
+
+.writeBox .ct2 {
+    height: 250px !important;
+}
+
+.submit{
+    align-items: center;
+    width: 15% !important;
+    margin: 0 auto;
+    margin-left: 15px;
+    /* transform: translate(50%, 0%) !important; */
+    
+}

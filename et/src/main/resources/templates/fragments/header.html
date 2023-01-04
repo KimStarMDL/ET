@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headerFragment">
+<!-- Header Start -->
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- header Nav Start -->
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                  data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{main}">
+                  <img src="img/logo.png" alt="Logo">
+                </a>
+              </div>
+
+              <!-- 검색 -->
+              <div class="col-md-7 col-sm-5 header-search">
+
+                <div class="search-form">
+
+                  <form class="navbar-form" role="search">
+
+                    <div class="form-group">
+
+                      <input type="text" class="form-control" placeholder="What do you need...">
+
+                    </div>
+
+                    <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+
+                  </form>
+
+                </div>
+
+              </div>
+
+
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse gnb1" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a th:href="@{main}">Home</a></li>
+                  <li><a th:if="${session.user == null}" th:href="@{login}">로그인</a></li>
+                  <li><a th:if="${session.user == null}" th:href="@{signUp}">회원가입</a></li>
+                  
+                  <li><a th:if="${session.user != null}" th:href="@{logout}">로그아웃</a></li>
+                  <li><a th:if="${session.user != null}" th:href="@{mypage}">마이페이지</a></li>
+                </ul>
+              </div><!-- /.navbar-collapse -->
+
+              <hr>
+              <div class="collapse navbar-collapse gnb2" id="bs-example-navbar-collapse-2">
+                <div class="category">
+                  <ul class="nav navbar-nav navbar-center">
+                    <li><a th:href="@{lifetipListAll}">LT게시판</a></li>
+                    <li><a href="#">게시판2</a></li>
+                    <li><a href="#">게시판3</a></li>
+                    <li><a href="#">게시판4</a></li>
+                    <li><a href="#">게시판5</a></li>
+                  </ul>
+                </div>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+          </nav>
+        </div>
+      </div>
+    </div>
+
+
+  </header><!-- header close -->
+  </th:block>
+  
+  </html>

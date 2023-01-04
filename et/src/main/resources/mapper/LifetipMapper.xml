@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+
+  <mapper namespace="com.myet.basic.lifetip.LifetipMapper">
+  
+  <!-- 수정전
+  <select id="lifetipListAll" resultType="LifetipDTO">
+  	select *
+  	from lt_board
+  	order by lt_num desc
+  	limit #{pageStart}, #{amount}
+  </select>
+   -->
+  
+  <!-- 위에 것에 새롭게 적용한 것 -->
+  <select id="lifetipListAll" resultType="LifetipDTO">
+  	select *
+  	from (
+  		select lt_num, u_id, lt_title, lt_content, lt_date, lt_view
+  		from lt_board
+  		<if test="keyword != null">
+  			where lt_title like concat('%', #{keyword}, '%' )
+  		</if>
+  		order by lt_num desc) as T1
+  	limit #{pageStart}, #{amount}
+  	
+  </select>
+  
+  <!-- 수정전 
+  <select id="lifetipTotal" resultType="int">
+  	select count(*)
+  	from lt_board
+  </select>
+   -->
+   
+   <!-- 위에 것 새롭게 적용한 것 -->
+   <select id="lifetipTotal" resultType="int">
+   	select count(*)
+   	from lt_board
+   	<if test="keyword != null">
+   		where lt_title like concat('%', #{keyword}, '%')
+   	</if>
+   	
+   </select>
+  
+  <insert id="lifetipInsert">
+  	insert into lt_board
+  	(
+  	u_id,
+  	lt_title,
+  	lt_content
+  	)
+  	values
+  	(
+  	#{u_id},
+  	#{lt_title},
+  	#{lt_content}
+  	)
+  
+  </insert>
+  
+  
+  <select id="lifetipDetail" resultType="LifetipDTO">
+  	select *
+  	from lt_board
+  	where lt_num = #{lt_num}
+  </select>
+  
+  
+  <update id="lifetipUpdate">
+  	update lt_board
+  	set
+  	lt_title = #{lt_title},
+  	lt_content = #{lt_content}
+  	where lt_num = #{lt_num}
+  </update>
+  
+  <delete id="lifetipDelete">
+  	delete from lt_board
+  	where lt_num = #{lt_num}
+  </delete>
+  
+  
+  <update id="lifetipViewCount" parameterType="int">
+  	update lt_board
+  	set lt_view = lt_view + 1
+  	where lt_num = #{lt_num}
+  </update>
+  
+  
+  
+  
+  </mapper>

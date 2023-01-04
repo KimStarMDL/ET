@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
+
+
+<body layout:fragment="content">
+
+	<!-- Slider Start -->
+		<section id="global-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="block h1Box">
+							<h1 class="h1Box">글 수정</h1>
+							<!-- <p>Don’t just take our word for it. Check out some of our latest work.</p> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- contact form start -->
+		<section id="contact-form">
+			<div class="container">
+				<div class="row writeBox">
+					<div class="col-md-6 col-sm-12">
+						<div class="block">
+							<form class="writeBox" action="lifetipUpdateForm" method="post">
+								<div class="form-group">
+									<input type="text" class="form-control ct1"
+										placeholder="메인 이미지(움직이는 이미지), 영상 미리 보기 파일 업로드 용도">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control ct1"
+										placeholder="카테고리 선택할 곳으로 쓸 것">
+								</div>
+								<div class="form-group">
+									<input th:if="${session.user != null}" type="hidden" name="u_id" th:value="${session.user.u_id}">
+									<input type="text" class="form-control ct1"
+										placeholder="제목을 입력하세요" name="lt_title" th:value="${update.lt_title}">
+								</div>
+								<div class="form-group-2">
+									<textarea class="form-control ct2" rows="3"
+										placeholder="내용을 입력하세요" name="lt_content" th:value="${update.lt_content}">[[${update.lt_content}]]</textarea>
+								</div>
+								<input type ="hidden" name="lt_num" th:value ="${param.lt_num}"> 
+								<button class="btn btn-default submit" type="button" onClick="location.href='lifetipListAll'">목록</button>
+								<button class="btn btn-default submit" type="submit">수정</button>
+							</form>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-12">
+						<div class="block">
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Call to action Start -->
+		<!-- <section id="call-to-action">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="block">
+                  <h2>We design delightful digital experiences.</h2>
+                  <p>Read more about what we do and our philosophy of design. Judge for yourself The work and results we’ve achieved for other clients, and meet our highly experienced Team who just love to design.</p>
+                  <a class="btn btn-default btn-call-to-action" href="#" >Tell Us Your Story</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> -->
+
+
+</body>
+
+</html>
